@@ -29,13 +29,14 @@ public class Main {
                     System.out.println("Список задач очищен");
                     break;
                 case "4":
-                    System.out.println(taskManager.getTask(1909901611));
+                    System.out.println(taskManager.getTask(2));
                     break;
                 case "5":
-                    System.out.println(taskManager.updateTask(task1, Status.IN_PROGRESS));
+                    Task task3 = new Task("Переезд", "Собрать оставшиеся вещи", Status.IN_PROGRESS);
+                    System.out.println(taskManager.updateTask(task1, task3));
                     break;
                 case "6":
-                    System.out.println(taskManager.deleteTask(400748859));
+                    System.out.println(taskManager.deleteTask(1));
                     break;
                 case "7":
                     taskManager.addEpic(epic1);
@@ -49,17 +50,19 @@ public class Main {
                     System.out.println("Список задач очищен");
                     break;
                 case "10":
-                    System.out.println(taskManager.getEpic(593730419));
+                    System.out.println(taskManager.getEpic(6));
                     break;
                 case "11":
-                    System.out.println(taskManager.updateEpic(epic1, Status.IN_PROGRESS));
+                    Epic epic3 = new Epic("Чертежи арочного моста", "Сделать проект моста через реку Волга");
+                    System.out.println(taskManager.updateEpic(epic1, epic3));
                     break;
                 case "12":
-                    System.out.println(taskManager.deleteEpic(1890866786));
+                    System.out.println(taskManager.deleteEpic(3));
                     break;
                 case "13":
-                    taskManager.addSubtask(subtask1_1);
-                    taskManager.addSubtask(subtask1_2);
+                    taskManager.addSubtask(subtask1_1, epic1);
+                    taskManager.addSubtask(subtask1_2, epic1);
+                    taskManager.addSubtask(subtask2_1, epic2);
                     break;
                 case "14":
                     System.out.println(taskManager.printSubtasks().values());
@@ -69,13 +72,21 @@ public class Main {
                     System.out.println("Список задач очищен");
                     break;
                 case "16":
-                    System.out.println(taskManager.getSubtask(1260787857));
+                    System.out.println(taskManager.getSubtask(4));
                     break;
                 case "17":
-                    System.out.println(taskManager.updateSubtask(subtask1_1, Status.IN_PROGRESS));
+                    Subtask subtask2_2 = new Subtask("Билеты на самолет", "Купить билеты на самолет", Status.DONE);
+                    System.out.println(taskManager.updateSubtask(subtask2_1, subtask2_2));
                     break;
                 case "18":
-                    System.out.println(taskManager.deleteSubtask(340984393));
+                    System.out.println(taskManager.deleteSubtask(5));
+                    break;
+                case "19":
+                    System.out.println(taskManager.printSubtusksOfEpic(epic2));
+                    break;
+                case "20":
+                    System.out.println("Выход из программы");
+                    return;
             }
         }
     }
@@ -94,11 +105,13 @@ public class Main {
         System.out.println("10 - Получить эпик по id");
         System.out.println("11 - Обновить статус эпика");
         System.out.println("12 - Удалить эпик");
-        System.out.println("13 - Добавить подзадачу в список");
-        System.out.println("14 - Посмотреть список подзадач");
-        System.out.println("15 - Очистить список подзадач");
+        System.out.println("13 - Добавить подзадачу в эпик");
+        System.out.println("14 - Посмотреть список всех подзадач всех эпиков");
+        System.out.println("15 - Очистить список всех подзадач всех эпиков");
         System.out.println("16 - Получить подзадачу по id");
         System.out.println("17 - Обновить статус подзадачи");
         System.out.println("18 - Удалить подзадачу");
+        System.out.println("19 - Посмотреть список подзадач эпика");
+        System.out.println("20 - Выход");
     }
 }
