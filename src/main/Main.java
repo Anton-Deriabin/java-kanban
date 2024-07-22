@@ -1,3 +1,11 @@
+package main;
+
+import status.Status;
+import taskManager.TaskManager;
+import typeOfTasks.Epic;
+import typeOfTasks.Subtask;
+import typeOfTasks.Task;
+
 import java.util.Scanner;
 
 public class Main {

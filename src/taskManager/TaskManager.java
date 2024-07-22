@@ -1,3 +1,9 @@
+package taskManager;
+
+import typeOfTasks.Epic;
+import typeOfTasks.Subtask;
+import typeOfTasks.Task;
+
 import java.util.HashMap;
 import java.util.Iterator;
 

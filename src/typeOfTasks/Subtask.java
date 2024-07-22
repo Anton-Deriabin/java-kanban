@@ -1,3 +1,7 @@
+package typeOfTasks;
+
+import status.Status;
+
 public class Subtask extends Task {
 
     public Subtask(String name, String description) {
