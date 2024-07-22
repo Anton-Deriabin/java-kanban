@@ -1,4 +1,4 @@
-package typeOfTasks;
+package model;
 
 import status.Status;
 

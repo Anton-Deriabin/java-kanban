@@ -1,10 +1,10 @@
 package main;
 
 import status.Status;
-import taskManager.TaskManager;
-import typeOfTasks.Epic;
-import typeOfTasks.Subtask;
-import typeOfTasks.Task;
+import manager.TaskManager;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.util.Scanner;
 

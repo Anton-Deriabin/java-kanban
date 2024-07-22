@@ -1,4 +1,4 @@
-package typeOfTasks;
+package model;
 
 import status.Status;
 
@@ -51,7 +51,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "typeOfTasks.Task{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

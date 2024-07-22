@@ -1,8 +1,8 @@
-package taskManager;
+package manager;
 
-import typeOfTasks.Epic;
-import typeOfTasks.Subtask;
-import typeOfTasks.Task;
+import model.Epic;
+import model.Subtask;
+import model.Task;
 
 import java.util.HashMap;
 import java.util.Iterator;
