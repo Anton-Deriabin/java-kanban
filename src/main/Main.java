@@ -1,10 +1,10 @@
 package main;
 
-import status.Status;
 import manager.TaskManager;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import status.Status;
 
 import java.util.Scanner;
 
@@ -16,10 +16,10 @@ public class Main {
         Task task1 = new Task("Переезд", "Собрать вещи");
         Task task2 = new Task("Стрижка", "Сходить в барбершоп");
         Epic epic1 = new Epic("Чертежи моста", "Сделать проект моста через реку Волга");
-        Subtask subtask1_1 = new Subtask("Пролетное строение", "Начертить пролетное строение");
-        Subtask subtask1_2 = new Subtask("Опоры", "Начертить опоры");
         Epic epic2 = new Epic("Командировка", "Подготовиться к командировке");
-        Subtask subtask2_1 = new Subtask("Билеты на самолет", "Купить билеты на самолет");
+        Subtask subtask1_1 = new Subtask("Пролетное строение", "Начертить пролетное строение", 3);
+        Subtask subtask1_2 = new Subtask("Опоры", "Начертить опоры", 3);
+        Subtask subtask2_1 = new Subtask("Билеты на самолет", "Купить билеты на самолет", 4);
         scanner = new Scanner(System.in);
         while (true) {
             printMenu();
@@ -40,8 +40,8 @@ public class Main {
                     System.out.println(taskManager.getTask(2));
                     break;
                 case "5":
-                    Task task3 = new Task("Переезд", "Собрать оставшиеся вещи", Status.IN_PROGRESS);
-                    System.out.println(taskManager.updateTask(task1, task3));
+                    Task task3 = new Task("Переезд. продолжение", "Собрать оставшиеся вещи", Status.IN_PROGRESS, task1.getId());
+                    System.out.println(taskManager.updateTask(task3));
                     break;
                 case "6":
                     System.out.println(taskManager.deleteTask(1));
@@ -58,19 +58,19 @@ public class Main {
                     System.out.println("Список задач очищен");
                     break;
                 case "10":
-                    System.out.println(taskManager.getEpic(6));
+                    System.out.println(taskManager.getEpic(3));
                     break;
                 case "11":
-                    Epic epic3 = new Epic("Чертежи арочного моста", "Сделать проект моста через реку Волга");
-                    System.out.println(taskManager.updateEpic(epic1, epic3));
+                    Epic epic3 = new Epic("Чертежи арочного моста", "Сделать проект моста через реку Волга", epic1.getId());
+                    System.out.println(taskManager.updateEpic(epic3));
                     break;
                 case "12":
                     System.out.println(taskManager.deleteEpic(3));
                     break;
                 case "13":
-                    taskManager.addSubtask(subtask1_1, epic1);
-                    taskManager.addSubtask(subtask1_2, epic1);
-                    taskManager.addSubtask(subtask2_1, epic2);
+                    taskManager.addSubtask(subtask1_1);
+                    taskManager.addSubtask(subtask1_2);
+                    taskManager.addSubtask(subtask2_1);
                     break;
                 case "14":
                     System.out.println(taskManager.printSubtasks().values());
@@ -80,16 +80,17 @@ public class Main {
                     System.out.println("Список задач очищен");
                     break;
                 case "16":
-                    System.out.println(taskManager.getSubtask(4));
+                    System.out.println(taskManager.getSubtask(5));
                     break;
                 case "17":
-                    Subtask subtask2_2 = new Subtask("Билеты на самолет", "Купить билеты на самолет", Status.DONE);
-                    System.out.println(taskManager.updateSubtask(subtask2_1, subtask2_2));
+                    Subtask subtask2_2 = new Subtask("Билеты на самолет", "Купить билеты на самолет", Status.DONE, subtask2_1.getId(), epic2.getId());
+                    System.out.println(taskManager.updateSubtask(subtask2_2));
                     break;
                 case "18":
                     System.out.println(taskManager.deleteSubtask(5));
                     break;
                 case "19":
+                    System.out.println(taskManager.printSubtusksOfEpic(epic1));
                     System.out.println(taskManager.printSubtusksOfEpic(epic2));
                     break;
                 case "20":

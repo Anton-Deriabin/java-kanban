@@ -12,9 +12,15 @@ public class Epic extends Task {
         this.epicSubtusks = new HashMap<>();
     }
 
+    public Epic(String name, String description, int id) {
+        super(name, description, id);
+        this.epicSubtusks = new HashMap<>();
+    }
+
     public HashMap<Integer, Subtask> getEpicSubtusks() {
         return epicSubtusks;
     }
+
 
     public void setEpicSubtusks(HashMap<Integer, Subtask> epicSubtusks) {
         this.epicSubtusks = epicSubtusks;
@@ -26,22 +32,6 @@ public class Epic extends Task {
 
     public void clear() {
         epicSubtusks.clear();
-    }
-
-    public boolean containsKey(int id) {
-        return epicSubtusks.containsKey(id);
-    }
-
-    public void remove(int id) {
-        for (Integer i : epicSubtusks.keySet()) {
-            if (epicSubtusks.containsKey(id)) {
-                epicSubtusks.remove(id);
-            }
-        }
-    }
-
-    public void replace(int id, Subtask replacedSubtask, Subtask subtaskToReplace) {
-        epicSubtusks.replace(id, replacedSubtask, subtaskToReplace);
     }
 
     public Status isSubtasksDone() {

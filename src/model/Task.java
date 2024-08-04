@@ -7,22 +7,26 @@ public class Task {
     private String description;
     private int id;
     private Status status;
-    private static int nextId = 1;
+
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.id = nextId;
         this.status = Status.NEW;
-        nextId++;
     }
 
-    public Task(String name, String description, Status status) {
+    public Task(String name, String description, Status status, int id) {
         this.name = name;
         this.description = description;
-        this.id = nextId;
         this.status = status;
-        nextId++;
+        this.id = id;
+    }
+
+    public Task(String name, String description, int id) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = Status.NEW;
     }
 
     public void setId(int id) {
@@ -33,12 +37,12 @@ public class Task {
         return id;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override
