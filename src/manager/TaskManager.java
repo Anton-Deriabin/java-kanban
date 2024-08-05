@@ -5,140 +5,46 @@ import model.Subtask;
 import model.Task;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
-public class TaskManager {
-    private static int nextId = 1;
-    private final HashMap<Integer, Task> tasksMap = new HashMap<>();
-    private final HashMap<Integer, Epic> epicsMap = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasksMap = new HashMap<>();
+public interface TaskManager {
+    Task addTask(Task task);
 
-    public Task addTask(Task task) {
-        task.setId(nextId);
-        nextId++;
-        tasksMap.put(task.getId(), task);
-        return task;
-    }
+    HashMap<Integer, Task> printTasks();
 
-    public HashMap<Integer, Task> printTasks() {
-        return tasksMap;
-    }
+    HashMap<Integer, Task> clearTasks();
 
-    public HashMap<Integer, Task> clearTasks() {
-        tasksMap.clear();
-        return tasksMap;
-    }
+    Task getTask(int id);
 
-    public Task getTask(int id) {
-        return tasksMap.get(id);
-    }
+    Task updateTask(Task taskToReplace);
 
-    public Task updateTask(Task taskToReplace) {
-        if (tasksMap.containsKey(taskToReplace.getId())) {
-            tasksMap.replace(taskToReplace.getId(), taskToReplace);
-        }
-        return taskToReplace;
-    }
+    HashMap<Integer, Task> deleteTask(int id);
 
-    public HashMap<Integer, Task> deleteTask(int id) {
-        tasksMap.remove(id);
-        return tasksMap;
-    }
+    Epic addEpic(Epic epic);
 
-    public Epic addEpic(Epic epic) {
-        epic.setId(nextId);
-        nextId++;
-        epicsMap.put(epic.getId(), epic);
-        return epic;
-    }
+    HashMap<Integer, Epic> printEpics();
 
-    public HashMap<Integer, Epic> printEpics() {
-        return epicsMap;
-    }
+    HashMap<Integer, Epic> clearEpics();
 
-    public HashMap<Integer, Epic> clearEpics() {
-        for (Integer i : epicsMap.keySet()) {
-            epicsMap.get(i).getEpicSubtusks().clear();
-        }
-        epicsMap.clear();
-        return epicsMap;
-    }
+    Epic getEpic(int id);
 
-    public Epic getEpic(int id) {
-        return epicsMap.get(id);
-    }
+    Epic updateEpic(Epic epicToReplace);
 
-    public Epic updateEpic(Epic epicToReplace) {
-        epicToReplace.setEpicSubtusks(epicsMap.get(epicToReplace.getId()).getEpicSubtusks());
-        if (epicsMap.containsKey(epicToReplace.getId())) {
-            epicsMap.replace(epicToReplace.getId(), epicToReplace);
-        }
-        return epicToReplace;
-    }
+    HashMap<Integer, Epic> deleteEpic(int id);
 
-    public HashMap<Integer, Epic> deleteEpic(int id) {
-        epicsMap.get(id).getEpicSubtusks().clear();
-        epicsMap.remove(id);
-        return epicsMap;
-    }
+    Subtask addSubtask(Subtask subtask);
 
-    public Subtask addSubtask(Subtask subtask) {
-        subtask.setId(nextId);
-        nextId++;
-        subtasksMap.put(subtask.getId(), subtask);
-        System.out.println(subtask.getSubtasksEpicId());
-        System.out.println(epicsMap.get(subtask.getSubtasksEpicId()));
-        epicsMap.get(subtask.getSubtasksEpicId()).put(subtask);
-        return subtask;
-    }
+    HashMap<Integer, Subtask> printSubtasks();
 
-    public HashMap<Integer, Subtask> printSubtasks() {
-        return subtasksMap;
-    }
+    HashMap<Integer, Subtask> clearSubtasks();
 
-    public HashMap<Integer, Subtask> clearSubtasks() {
-        subtasksMap.clear();
-        for (Epic epic : epicsMap.values()) {
-            epic.clear();
-        }
-        return subtasksMap;
-    }
+    Subtask getSubtask(int id);
 
-    public Subtask getSubtask(int id) {
-        return subtasksMap.get(id);
-    }
+    Subtask updateSubtask(Subtask subtaskToReplace);
 
-    public Subtask updateSubtask(Subtask subtaskToReplace) {
-        if (subtasksMap.containsKey(subtaskToReplace.getId())) {
-            subtasksMap.replace(subtaskToReplace.getId(), subtaskToReplace);
-        }
-        if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                containsKey(subtaskToReplace.getId())) {
-            epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                    replace(subtaskToReplace.getId(), subtaskToReplace);
-        }
-        epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId()).
-                isSubtasksDone());
-        return subtaskToReplace;
-    }
+    HashMap<Integer, Subtask> deleteSubtask(int id);
 
-    public HashMap<Integer, Subtask> deleteSubtask(int id) {
-        subtasksMap.remove(id);
-        for (Epic epic : epicsMap.values()) {
-            Iterator<Subtask> iterator = epic.getEpicSubtusks().values().iterator();
-            while (iterator.hasNext()) {
-                Subtask subtask = iterator.next();
-                if (subtask.getId() == id) {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
-        return subtasksMap;
-    }
+    HashMap<Integer, Subtask> printSubtusksOfEpic(Epic epic);
 
-    public HashMap<Integer, Subtask> printSubtusksOfEpic(Epic epic) {
-        return epic.getEpicSubtusks();
-    }
+    List<Task> getHistory();
 }
-

@@ -29,6 +29,14 @@ public class Task {
         this.status = Status.NEW;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
