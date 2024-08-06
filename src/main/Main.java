@@ -43,7 +43,7 @@ public class Main {
                     break;
                 case "5":
                     Task task3 = new Task("Переезд. продолжение", "Собрать оставшиеся вещи",
-                            Status.IN_PROGRESS, task1.getId());
+                            Status.INPROGRESS, task1.getId());
                     System.out.println(inMemoryTaskManager.updateTask(task3));
                     break;
                 case "6":

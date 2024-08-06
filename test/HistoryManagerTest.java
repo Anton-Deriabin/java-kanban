@@ -31,10 +31,9 @@ public class HistoryManagerTest {
         Assertions.assertEquals(epic1, listTest.get(1), "Задача в листе равна вызванной ранее");
         Assertions.assertEquals(subtask1, listTest.get(2), "Задача в листе равна вызванной ранее");
         // меняем статус задачи и проверяем что новый вызванный список пополнился ей
-        task1.setStatus(Status.IN_PROGRESS);
+        task1.setStatus(Status.INPROGRESS);
         inMemoryTaskManager.getTask(1);
         List<Task> listTest2= inMemoryTaskManager.getHistory();
         Assertions.assertEquals(task1, listTest2.get(3), "Задача в листе равна вызванной ранее");
-
     }
 }

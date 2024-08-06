@@ -14,14 +14,11 @@ public class TaskTest {
         Task task1 = new Task("Переезд", "Собрать вещи");
         inMemoryTaskManager.addTask(task1);
         Task task2 = new Task("Переезд", "Собрать вещи", Status.NEW, task1.getId());
-        // проверяем будут ли равны поля задач при добавлении задачи в менеджер и ручного задания полей
         Assertions.assertEquals(task1.getName(), task2.getName(), "Имена не равны");
         Assertions.assertEquals(task1.getDescription(), task2.getDescription(), "Описания не равны");
         Assertions.assertEquals(task1.getStatus(), task2.getStatus(), "Статусы не равны");
-        // меняем статус и проверяем что статусы действительно не равны
-        task1.setStatus(Status.IN_PROGRESS);
+        task1.setStatus(Status.INPROGRESS);
         Assertions.assertNotEquals(task1.getStatus(), task2.getStatus(), "Статусы равны");
-        // проверяем будут ли равны задачи с разными статусами с одним id
         Assertions.assertEquals(task1, task2, "Задачи не равны");
     }
 
@@ -30,14 +27,11 @@ public class TaskTest {
         Epic task1 = new Epic("Переезд", "Собрать вещи");
         inMemoryTaskManager.addEpic(task1);
         Epic task2 = new Epic("Переезд", "Собрать вещи", task1.getId());
-        // проверяем будут ли равны поля задач при добавлении эпика в менеджер и ручного задания полей
         Assertions.assertEquals(task1.getName(), task2.getName(), "Имена не равны");
         Assertions.assertEquals(task1.getDescription(), task2.getDescription(), "Описания не равны");
         Assertions.assertEquals(task1.getStatus(), task2.getStatus(), "Статусы не равны");
-        // меняем статус и проверяем что статусы действительно не равны
-        task2.setStatus(Status.IN_PROGRESS);
+        task2.setStatus(Status.INPROGRESS);
         Assertions.assertNotEquals(task1.getStatus(), task2.getStatus(), "Статусы равны");
-        // проверяем будут ли равны эпики с разными статусами с одним id
         Assertions.assertEquals(task1, task2, "Эпики не равны");
     }
 
@@ -49,14 +43,11 @@ public class TaskTest {
         inMemoryTaskManager.addSubtask(task2);
         Subtask task3 = new Subtask("Собрать документы", "Взять паспорт", Status.NEW, task2.getId(),
                 task1.getId());
-        // проверяем будут ли равны поля подзадач при добавлении подзадач в менеджер и ручного задания полей
         Assertions.assertEquals(task2.getName(), task3.getName(), "Имена не равны");
         Assertions.assertEquals(task2.getDescription(), task3.getDescription(), "Описания не равны");
         Assertions.assertEquals(task2.getStatus(), task3.getStatus(), "Статусы не равны");
-        // меняем статус и проверяем что статусы действительно не равны
-        task3.setStatus(Status.IN_PROGRESS);
+        task3.setStatus(Status.INPROGRESS);
         Assertions.assertNotEquals(task2.getStatus(), task3.getStatus(), "Статусы равны");
-        // проверяем будут ли равны подзадач с разными статусами с одним id
         Assertions.assertEquals(task2, task3, "Задачи не равны");
     }
 }

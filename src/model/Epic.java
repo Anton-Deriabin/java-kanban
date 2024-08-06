@@ -38,8 +38,8 @@ public class Epic extends Task {
         int doneCounter = 0;
         Status statusOfAllSubtusks = Status.NEW;
         for (Subtask subtask : epicSubtusks.values()) {
-            if (subtask.getStatus() == Status.IN_PROGRESS) {
-                statusOfAllSubtusks = Status.IN_PROGRESS;
+            if (subtask.getStatus() == Status.INPROGRESS) {
+                statusOfAllSubtusks = Status.INPROGRESS;
             } else if (subtask.getStatus() == Status.DONE) {
                 doneCounter++;
             }

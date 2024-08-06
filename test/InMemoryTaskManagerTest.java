@@ -24,21 +24,5 @@ public class InMemoryTaskManagerTest {
         Assertions.assertEquals(epic2 , epic3, "Задачи не равны");
         Assertions.assertEquals(subtask2 , subtask3, "Задачи не равны");
     }
-
-
-
-    @Test
-    public void testAddingEpicToItself() {
-        Epic epic1 = new Epic("Чертежи моста", "Сделать проект моста через реку Волга");
-        //inMemoryTaskManager.addSubtask(epic1); - код не скомпилируется, что говорит о том что проверка пройдена
-    }
-
-    @Test
-    public void testSubtaskCannotBeItsOwnEpic() {
-        Subtask subtask2_1 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
-                4);
-        //inMemoryTaskManager.addEpic(subtask2_1); - код не скомпилируется, что говорит о том что проверка пройдена
-    }
-
 }
 
