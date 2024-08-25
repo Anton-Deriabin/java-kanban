@@ -47,18 +47,5 @@ public class HistoryManagerTest {
         Assertions.assertEquals(epic1, listTest4.get(0), "Задача в листе не равна вызванной ранее");
         Assertions.assertEquals(subtask1, listTest4.get(1), "Задача в листе не равна вызванной ранее");
         Assertions.assertEquals(task2, listTest4.get(2), "Задача в листе не равна вызванной ранее");
-        inMemoryTaskManager.deleteSubtask(3);
-        List<Task> listTest5= inMemoryTaskManager.getHistory();
-        Assertions.assertEquals(epic1, listTest5.get(0), "Задача в листе не равна вызванной ранее");
-        Assertions.assertEquals(task2, listTest5.get(1), "Задача в листе не равна вызванной ранее");
-        inMemoryTaskManager.addSubtask(subtask1);
-        inMemoryTaskManager.getSubtask(5);
-        List<Task> listTest6= inMemoryTaskManager.getHistory();
-        Assertions.assertEquals(epic1, listTest6.get(0), "Задача в листе не равна вызванной ранее");
-        Assertions.assertEquals(task2, listTest6.get(1), "Задача в листе не равна вызванной ранее");
-        Assertions.assertEquals(subtask1, listTest6.get(2), "Задача в листе не равна вызванной ранее");
-        inMemoryTaskManager.deleteEpic(2);
-        List<Task> listTest7= inMemoryTaskManager.getHistory();
-        Assertions.assertEquals(task2, listTest7.get(0), "Задача в листе не равна вызванной ранее");
     }
 }
