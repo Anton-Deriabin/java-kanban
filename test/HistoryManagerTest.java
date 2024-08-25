@@ -10,7 +10,7 @@ import status.Status;
 import java.util.List;
 
 public class HistoryManagerTest {
-    private TaskManager inMemoryTaskManager = Managers.getDefault();
+    private final TaskManager inMemoryTaskManager = Managers.getDefault();
 
     @Test
     public void historyManagerShouldPutCurrentTasks() {
