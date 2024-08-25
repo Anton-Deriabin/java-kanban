@@ -155,13 +155,13 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtasksMap.containsKey(subtaskToReplace.getId())) {
             subtasksMap.replace(subtaskToReplace.getId(), subtaskToReplace);
         }
-        if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                containsKey(subtaskToReplace.getId())) {
-            epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                    replace(subtaskToReplace.getId(), subtaskToReplace);
+        if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
+                        .containsKey(subtaskToReplace.getId())) {
+            epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
+                            .replace(subtaskToReplace.getId(), subtaskToReplace);
         }
-        epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId()).
-                isSubtasksDone());
+        epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId())
+                        .isSubtasksDone());
         return subtaskToReplace;
     }
 
