@@ -85,9 +85,9 @@ public class Main {
                     System.out.println(inMemoryTaskManager.getSubtask(5));
                     break;
                 case "17":
-                    Subtask subtask2_2 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
+                    Subtask subtask22 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
                             Status.DONE, subtask21.getId(), epic2.getId());
-                    System.out.println(inMemoryTaskManager.updateSubtask(subtask2_2));
+                    System.out.println(inMemoryTaskManager.updateSubtask(subtask22));
                     break;
                 case "18":
                     System.out.println(inMemoryTaskManager.deleteSubtask(5));
