@@ -60,5 +60,6 @@ public class HistoryManagerTest {
         inMemoryTaskManager.deleteEpic(2);
         List<Task> listTest7= inMemoryTaskManager.getHistory();
         Assertions.assertEquals(task2, listTest7.get(0), "Задача в листе не равна вызванной ранее");
+        inMemoryTaskManager.setNextId(1);
     }
 }

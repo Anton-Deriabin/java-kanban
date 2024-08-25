@@ -191,5 +191,9 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return inMemoryHistoryManager.getHistory();
     }
+
+    public void setNextId(int nextId) {
+        InMemoryTaskManager.nextId = nextId;
+    }
 }
 

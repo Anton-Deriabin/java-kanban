@@ -47,4 +47,6 @@ public interface TaskManager {
     HashMap<Integer, Subtask> printSubtusksOfEpic(Epic epic);
 
     List<Task> getHistory();
+
+     void setNextId(int id);
 }
