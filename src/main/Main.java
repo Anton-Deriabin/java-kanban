@@ -18,10 +18,10 @@ public class Main {
         Task task2 = new Task("Стрижка", "Сходить в барбершоп");
         Epic epic1 = new Epic("Чертежи моста", "Сделать проект моста через реку Волга");
         Epic epic2 = new Epic("Командировка", "Подготовиться к командировке");
-        Subtask subtask1_1 = new Subtask("Пролетное строение", "Начертить пролетное строение",
+        Subtask subtask11 = new Subtask("Пролетное строение", "Начертить пролетное строение",
                 3);
-        Subtask subtask1_2 = new Subtask("Опоры", "Начертить опоры", 3);
-        Subtask subtask2_1 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
+        Subtask subtask12 = new Subtask("Опоры", "Начертить опоры", 3);
+        Subtask subtask21 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
                 4);
         scanner = new Scanner(System.in);
         while (true) {
@@ -71,9 +71,9 @@ public class Main {
                     System.out.println(inMemoryTaskManager.deleteEpic(3));
                     break;
                 case "13":
-                    inMemoryTaskManager.addSubtask(subtask1_1);
-                    inMemoryTaskManager.addSubtask(subtask1_2);
-                    inMemoryTaskManager.addSubtask(subtask2_1);
+                    inMemoryTaskManager.addSubtask(subtask11);
+                    inMemoryTaskManager.addSubtask(subtask12);
+                    inMemoryTaskManager.addSubtask(subtask21);
                     break;
                 case "14":
                     System.out.println(inMemoryTaskManager.printSubtasks().values());
@@ -86,7 +86,7 @@ public class Main {
                     break;
                 case "17":
                     Subtask subtask2_2 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
-                            Status.DONE, subtask2_1.getId(), epic2.getId());
+                            Status.DONE, subtask21.getId(), epic2.getId());
                     System.out.println(inMemoryTaskManager.updateSubtask(subtask2_2));
                     break;
                 case "18":
