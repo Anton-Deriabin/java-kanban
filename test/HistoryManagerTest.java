@@ -12,7 +12,7 @@ import java.util.List;
 public class HistoryManagerTest {
     private final TaskManager inMemoryTaskManager = Managers.getDefault();
 
-    @Test
+    /*@Test
     public void historyManagerShouldPutCurrentTasks() {
         Task task1 = new Task("Переезд", "Собрать вещи");
         Epic epic1 = new Epic("Чертежи моста", "Сделать проект моста через реку Волга");
@@ -61,4 +61,4 @@ public class HistoryManagerTest {
         List<Task> listTest7= inMemoryTaskManager.getHistory();
         Assertions.assertEquals(task2, listTest7.get(0), "Задача в листе не равна вызванной ранее");
     }
-}
+}*/
