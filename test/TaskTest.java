@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import status.Status;
 
 public class TaskTest {
-    private TaskManager inMemoryTaskManager = Managers.getDefault();
+    TaskManager inMemoryTaskManager = Managers.getDefault();
 
     @Test
     public void taskShouldBeEqualsToTaskWithSameId() {

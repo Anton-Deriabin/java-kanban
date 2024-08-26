@@ -5,7 +5,7 @@ public final class Managers {
     private Managers() {
     }
 
-    public static HistoryManager getDefaultHistory(){
+    public static HistoryManager getDefaultHistory() {
         return new InMemoryHistoryManager();
     }
 

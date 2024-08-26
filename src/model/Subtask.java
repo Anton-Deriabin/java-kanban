@@ -3,7 +3,7 @@ package model;
 import status.Status;
 
 public class Subtask extends Task {
-    private int subtasksEpicId;
+    private final int subtasksEpicId;
 
 
     public Subtask(String name, String description, int subtasksEpicId) {

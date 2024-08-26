@@ -28,6 +28,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Task> clearTasks() {
+        for (Integer taskKey : tasksMap.keySet()) {
+            inMemoryHistoryManager.remove(taskKey);
+        }
         tasksMap.clear();
         return tasksMap;
     }
@@ -48,6 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Task> deleteTask(int id) {
+        inMemoryHistoryManager.remove(id);
         tasksMap.remove(id);
         return tasksMap;
     }
@@ -67,10 +71,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Epic> clearEpics() {
+        for (Integer epicKey : epicsMap.keySet()) {
+            inMemoryHistoryManager.remove(epicKey);
+        }
+        for (Integer subtaskKey : subtasksMap.keySet()) {
+            inMemoryHistoryManager.remove(subtaskKey);
+        }
         for (Integer i : epicsMap.keySet()) {
             epicsMap.get(i).getEpicSubtusks().clear();
         }
         epicsMap.clear();
+        subtasksMap.clear();
         return epicsMap;
     }
 
@@ -91,7 +102,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Epic> deleteEpic(int id) {
+        inMemoryHistoryManager.remove(id);
+        for (Integer subtaskKey : epicsMap.get(id).getEpicSubtusks().keySet()) {
+            inMemoryHistoryManager.remove(subtaskKey);
+        }
         epicsMap.get(id).getEpicSubtusks().clear();
+        Iterator<Map.Entry<Integer, Subtask>> iterator = subtasksMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, Subtask> entry = iterator.next();
+            if (entry.getValue().getSubtasksEpicId() == id) {
+                iterator.remove();
+            }
+        }
         epicsMap.remove(id);
         return epicsMap;
     }
@@ -112,6 +134,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Subtask> clearSubtasks() {
+        for (Integer subtaskKey : subtasksMap.keySet()) {
+            inMemoryHistoryManager.remove(subtaskKey);
+        }
         subtasksMap.clear();
         for (Epic epic : epicsMap.values()) {
             epic.clear();
@@ -130,18 +155,19 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtasksMap.containsKey(subtaskToReplace.getId())) {
             subtasksMap.replace(subtaskToReplace.getId(), subtaskToReplace);
         }
-        if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                containsKey(subtaskToReplace.getId())) {
-            epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks().
-                    replace(subtaskToReplace.getId(), subtaskToReplace);
+        if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
+                        .containsKey(subtaskToReplace.getId())) {
+            epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
+                            .replace(subtaskToReplace.getId(), subtaskToReplace);
         }
-        epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId()).
-                isSubtasksDone());
+        epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId())
+                        .isSubtasksDone());
         return subtaskToReplace;
     }
 
     @Override
     public HashMap<Integer, Subtask> deleteSubtask(int id) {
+        inMemoryHistoryManager.remove(id);
         subtasksMap.remove(id);
         for (Epic epic : epicsMap.values()) {
             Iterator<Subtask> iterator = epic.getEpicSubtusks().values().iterator();
@@ -164,6 +190,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return inMemoryHistoryManager.getHistory();
+    }
+
+    public void setNextId(int nextId) {
+        InMemoryTaskManager.nextId = nextId;
     }
 }
 

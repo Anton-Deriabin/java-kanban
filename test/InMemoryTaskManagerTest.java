@@ -6,7 +6,7 @@ import model.Task;
 import org.junit.jupiter.api.*;
 
 public class InMemoryTaskManagerTest {
-    private TaskManager inMemoryTaskManager = Managers.getDefault();
+    TaskManager inMemoryTaskManager = Managers.getDefault();
 
     @Test
     public void inMemoryTaskManagerShouldPutDifferentTypeOfTasks() {
@@ -23,6 +23,10 @@ public class InMemoryTaskManagerTest {
         Assertions.assertEquals(task2, task3, "Задачи не равны");
         Assertions.assertEquals(epic2 , epic3, "Задачи не равны");
         Assertions.assertEquals(subtask2 , subtask3, "Задачи не равны");
+        inMemoryTaskManager.deleteEpic(2);
+        Assertions.assertNull(inMemoryTaskManager.getEpic(2), "Эпик не удален");
+        Assertions.assertNull(inMemoryTaskManager.getSubtask(3), "Подзадача не удалена вместе с эпиком");
+        inMemoryTaskManager.setNextId(1);
     }
 }
 

@@ -3,8 +3,8 @@ package model;
 import status.Status;
 
 public class Task {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private int id;
     private Status status;
 
