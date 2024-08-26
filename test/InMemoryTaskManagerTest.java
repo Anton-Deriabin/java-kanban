@@ -6,7 +6,7 @@ import model.Task;
 import org.junit.jupiter.api.*;
 
 public class InMemoryTaskManagerTest {
-    private final TaskManager inMemoryTaskManager = Managers.getDefault();
+    TaskManager inMemoryTaskManager = Managers.getDefault();
 
     @Test
     public void inMemoryTaskManagerShouldPutDifferentTypeOfTasks() {
