@@ -1,5 +1,6 @@
 package model;
 
+import manager.TaskType;
 import status.Status;
 
 import java.util.HashMap;
@@ -48,5 +49,24 @@ public class Epic extends Task {
             statusOfAllSubtusks = Status.DONE;
         }
         return statusOfAllSubtusks;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d,%s,%s,%s,%s,", getId(), TaskType.EPIC, getName(), getStatus(), getDescription());
+    }
+
+    public static Epic fromString(String value) {
+        String[] fields = value.split(",");
+        int id = Integer.parseInt(fields[0]);
+        TaskType taskType = TaskType.valueOf(fields[1]);
+        String name = fields[2];
+        Status status = Status.valueOf(fields[3]);
+        String description = fields[4];
+
+        if (taskType == TaskType.EPIC) {
+            return new Epic(name, description, id);
+        }
+        throw new IllegalArgumentException("Неподдерживаемый тип задачи: " + taskType);
     }
 }

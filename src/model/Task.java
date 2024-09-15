@@ -1,5 +1,6 @@
 package model;
 
+import manager.TaskType;
 import status.Status;
 
 public class Task {
@@ -63,11 +64,20 @@ public class Task {
 
     @Override
     public String toString() {
-        return "{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
-                '}';
+        return String.format("%d,%s,%s,%s,%s,", id, TaskType.TASK, name, status, description);
+    }
+
+    public static Task fromString(String value) {
+        String[] fields = value.split(",");
+        int id = Integer.parseInt(fields[0]);
+        TaskType taskType = TaskType.valueOf(fields[1]);
+        String name = fields[2];
+        Status status = Status.valueOf(fields[3]);
+        String description = fields[4];
+
+        if (taskType == TaskType.TASK) {
+            return new Task(name, description, status, id);
+        }
+        throw new IllegalArgumentException("Неподдерживаемый тип задачи: " + taskType);
     }
 }
