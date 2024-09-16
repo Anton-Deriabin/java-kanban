@@ -78,6 +78,6 @@ public class Task {
         if (taskType == TaskType.TASK) {
             return new Task(name, description, status, id);
         }
-        throw new IllegalArgumentException("Неподдерживаемый тип задачи: " + taskType);
+        throw new IllegalArgumentException(String.format("Неподдерживаемый тип задачи: %s", taskType));
     }
 }

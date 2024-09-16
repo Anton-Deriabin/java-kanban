@@ -32,7 +32,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 writer.write(subtask.toString() + "\n");
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при сохранении данных в файл: " + file.getName());
+            throw new ManagerSaveException(String.format("Ошибка при сохранении данных в файл: %s", file.getName()));
         }
     }
 
@@ -58,11 +58,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                         manager.addEpic(epic);
                         break;
                     default:
-                        throw new IllegalArgumentException("Неизвестный тип задачи: " + taskType);
+                        throw new IllegalArgumentException(String.format("Неизвестный тип задачи: %s", taskType));
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при загрузке данных из файла: " + file.getName());
+            throw new ManagerSaveException(String.format("Ошибка при сохранении данных в файл: %s", file.getName()));
         }
         return manager;
     }
@@ -128,6 +128,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         HashMap<Integer, Subtask> subtasks = super.deleteSubtask(id);
         save();
         return subtasks;
+    }
+
+    @Override
+    public HashMap<Integer, Task> clearTasks() {
+        super.clearTasks();
+        save();
+        return tasksMap;
+    }
+
+    @Override
+    public HashMap<Integer, Subtask> clearSubtasks() {
+        super.clearSubtasks();
+        save();
+        return subtasksMap;
+    }
+
+    @Override
+    public HashMap<Integer, Epic> clearEpics() {
+        super.clearEpics();
+        save();
+        return epicsMap;
     }
 }
 

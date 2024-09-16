@@ -39,6 +39,6 @@ public class Subtask extends Task {
         if (taskType == TaskType.SUBTASK) {
             return new Subtask(name, description, status, id, epicId);
         }
-        throw new IllegalArgumentException("Неподдерживаемый тип задачи: " + taskType);
+        throw new IllegalArgumentException(String.format("Неподдерживаемый тип задачи: %s", taskType));
     }
 }

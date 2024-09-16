@@ -67,6 +67,6 @@ public class Epic extends Task {
         if (taskType == TaskType.EPIC) {
             return new Epic(name, description, id);
         }
-        throw new IllegalArgumentException("Неподдерживаемый тип задачи: " + taskType);
+        throw new IllegalArgumentException(String.format("Неподдерживаемый тип задачи: %s", taskType));
     }
 }
