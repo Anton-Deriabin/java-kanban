@@ -13,8 +13,8 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Task> tasksMap = new HashMap<>();
     protected final HashMap<Integer, Epic> epicsMap = new HashMap<>();
     protected final HashMap<Integer, Subtask> subtasksMap = new HashMap<>();
-    private TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime
-            , Comparator.nullsLast(Comparator.naturalOrder())));
+    private TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime,
+            Comparator.nullsLast(Comparator.naturalOrder())));
 
     @Override
     public Task addTask(Task task) {
