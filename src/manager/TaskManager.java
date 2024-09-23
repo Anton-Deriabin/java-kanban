@@ -6,6 +6,7 @@ import model.Task;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskManager {
     Task addTask(Task task);
@@ -14,7 +15,7 @@ public interface TaskManager {
 
     HashMap<Integer, Task> clearTasks();
 
-    Task getTask(int id);
+    Optional<Task> getTask(int id);
 
     Task updateTask(Task taskToReplace);
 
@@ -26,7 +27,7 @@ public interface TaskManager {
 
     HashMap<Integer, Epic> clearEpics();
 
-    Epic getEpic(int id);
+    Optional<Epic> getEpic(int id);
 
     Epic updateEpic(Epic epicToReplace);
 
@@ -38,7 +39,7 @@ public interface TaskManager {
 
     HashMap<Integer, Subtask> clearSubtasks();
 
-    Subtask getSubtask(int id);
+    Optional<Subtask> getSubtask(int id);
 
     Subtask updateSubtask(Subtask subtaskToReplace);
 
