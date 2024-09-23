@@ -15,6 +15,7 @@ public class Task {
     private Status status;
     private Duration duration;
     private LocalDateTime startTime;
+    protected static String format = "HH:mm dd.MM.yyyy";
 
     public Task(String name, String description, Duration duration, LocalDateTime startTime) {
         this.name = name;
@@ -108,9 +109,13 @@ public class Task {
         this.startTime = startTime;
     }
 
+    public static String getFormat() {
+        return format;
+    }
+
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return String.format("%d,%s,%s,%s,%s,%d,%s", id, TaskType.TASK, name, status, description, duration.toMinutes(),
                 startTime.format(formatter));
     }
@@ -124,7 +129,7 @@ public class Task {
         String description = fields[4];
         long durationMinutes = Long.parseLong(fields[5]);
         Duration duration = Duration.ofMinutes(durationMinutes);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         LocalDateTime startTime = LocalDateTime.parse(fields[6], formatter);
         if (taskType == TaskType.TASK) {
             return new Task(name, description, id, status, duration, startTime);

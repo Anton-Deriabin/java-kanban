@@ -48,51 +48,52 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void subtaskShouldUpdateEpicStatus() {
-        Epic task1 = new Epic("Переезд", "Собрать вещи");
-        inMemoryTaskManager.addEpic(task1);
-        Subtask task2 = new Subtask("Пролетное строение",
+        Epic epic1 = new Epic("Переезд", "Собрать вещи");
+        inMemoryTaskManager.addEpic(epic1);
+        Subtask subtask2 = new Subtask("Пролетное строение",
                 "Начертить пролетное строение",
                 1,
                 Duration.ofDays(14),
                 LocalDateTime.of(2024, 10, 13, 8, 0));
-        inMemoryTaskManager.addSubtask(task2);
-        Subtask task3 = new Subtask("Опоры",
+        inMemoryTaskManager.addSubtask(subtask2);
+        Subtask subtask3 = new Subtask("Опоры",
                 "Начертить опоры",
                 1,
                 Duration.ofDays(8),
                 LocalDateTime.of(2024, 10, 28, 8, 0));
-        inMemoryTaskManager.addSubtask(task3);
-        Epic task4 = new Epic("Переезд", "Собрать вещи", task1.getId(), task1.getStatus(), task1.getDuration(), task1.getStartTime());
-        Assertions.assertEquals(task1, task4, "Эпики не равны");
-        Subtask task5 = new Subtask(task2.getId(),
+        inMemoryTaskManager.addSubtask(subtask3);
+        Epic epic4 = new Epic("Переезд", "Собрать вещи", epic1.getId(), epic1.getStatus(), epic1.getDuration(), epic1.getStartTime());
+        Assertions.assertEquals(epic1, epic4, "Эпики не равны");
+        Subtask subtask5 = new Subtask(subtask2.getId(),
                 "Пролетное строение",
                 "Начертить пролетное строение",
                 Status.INPROGRESS,
-                task2.getSubtasksEpicId(),
-                task2.getDuration(),
-                task2.getStartTime());
-        inMemoryTaskManager.updateSubtask(task5);
-        task4.setStatus(Status.INPROGRESS);
-        Assertions.assertEquals(task1, task4, "Эпики не равны");
-        Subtask task6 = new Subtask(task2.getId(),
+                subtask2.getSubtasksEpicId(),
+                subtask2.getDuration(),
+                subtask2.getStartTime());
+        inMemoryTaskManager.updateSubtask(subtask5);
+        epic4.setStatus(Status.INPROGRESS);
+        Assertions.assertEquals(epic1, epic4, "Эпики не равны");
+        Subtask subtusk6 = new Subtask(subtask2.getId(),
                 "Пролетное строение",
                 "Начертить пролетное строение",
                 Status.DONE,
-                task2.getSubtasksEpicId(),
-                task2.getDuration(),
-                task2.getStartTime());
-        inMemoryTaskManager.updateSubtask(task6);
-        Assertions.assertEquals(task1, task4, "Эпики не равны");
-        Subtask task7 = new Subtask(task3.getId(),
+                subtask2.getSubtasksEpicId(),
+                subtask2.getDuration(),
+                subtask2.getStartTime());
+        inMemoryTaskManager.updateSubtask(subtusk6);
+        Assertions.assertEquals(epic1, epic4, "Эпики не равны");
+        Subtask subtask7 = new Subtask(subtask3.getId(),
                 "Пролетное строение",
                 "Начертить пролетное строение",
                 Status.DONE,
-                task3.getSubtasksEpicId(),
-                task3.getDuration(),
-                task3.getStartTime());
-        inMemoryTaskManager.updateSubtask(task7);
-        task4.setStatus(Status.DONE);
-        Assertions.assertEquals(task1, task4, "Эпики не равны");
+                subtask3.getSubtasksEpicId(),
+                subtask3.getDuration(),
+                subtask3.getStartTime());
+        inMemoryTaskManager.updateSubtask(subtask7);
+        epic4.setStatus(Status.DONE);
+        Assertions.assertEquals(epic1, epic4, "После установки статусов Status.DONE всем Subtask " +
+                "epic1 не равен epic4");
         inMemoryTaskManager.setNextId(1);
     }
 
@@ -168,11 +169,11 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(task1);
         Assertions.assertDoesNotThrow(() -> {
             inMemoryTaskManager.addTask(task2);
-        }, "Исключение не выброшено");
+        }, "Исключение выброшено");
         inMemoryTaskManager.addSubtask(subtask1);
         Assertions.assertDoesNotThrow(() -> {
             inMemoryTaskManager.addSubtask(subtask2);
-        }, "Исключение не выброшено");
+        }, "Исключение выброшено");
         inMemoryTaskManager.setNextId(1);
     }
 }

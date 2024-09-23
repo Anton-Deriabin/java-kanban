@@ -67,7 +67,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return String.format("%d,%s,%s,%s,%s,%d,%s",
                 getId(),
                 TaskType.EPIC,
@@ -87,7 +87,7 @@ public class Epic extends Task {
         String description = fields[4];
         long durationMinutes = Long.parseLong(fields[5]);
         Duration duration = Duration.ofMinutes(durationMinutes);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         LocalDateTime startTime = LocalDateTime.parse(fields[6], formatter);
 
         if (taskType == TaskType.EPIC) {
