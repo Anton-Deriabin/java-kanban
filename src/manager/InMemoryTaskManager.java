@@ -216,15 +216,15 @@ public class InMemoryTaskManager implements TaskManager {
     public boolean isOverlapping(Task newTask) {
         return prioritizedTasks.stream()
                 .anyMatch(existingTask ->
-                        existingTask.getStartTime() != null
-                                && existingTask.getEndTime() != null &&
-                                newTask.getStartTime().isBefore(existingTask.getStartTime())
-                                && newTask.getEndTime().isAfter(existingTask.getStartTime())
-                                || newTask.getStartTime().isBefore(existingTask.getEndTime())
-                                && newTask.getEndTime().isAfter(existingTask.getEndTime())
-                                || newTask.getStartTime().isAfter(existingTask.getStartTime())
-                                && newTask.getEndTime().isBefore(existingTask.getEndTime())
-                                || newTask.getStartTime().isBefore(existingTask.getStartTime())
-                                && newTask.getEndTime().isAfter(existingTask.getEndTime()));
+                        existingTask.getStartTime() != null &&
+                                existingTask.getEndTime() != null &&
+                                newTask.getStartTime().isBefore(existingTask.getStartTime()) &&
+                                newTask.getEndTime().isAfter(existingTask.getStartTime()) ||
+                                newTask.getStartTime().isBefore(existingTask.getEndTime()) &&
+                                        newTask.getEndTime().isAfter(existingTask.getEndTime()) ||
+                                newTask.getStartTime().isAfter(existingTask.getStartTime()) &&
+                                        newTask.getEndTime().isBefore(existingTask.getEndTime()) ||
+                                newTask.getStartTime().isBefore(existingTask.getStartTime()) &&
+                                        newTask.getEndTime().isAfter(existingTask.getEndTime()));
     }
 }
