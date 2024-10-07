@@ -21,7 +21,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     public void save() {
         try (Writer writer = new FileWriter(file)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("Список сохраненных задач:\n");
             for (Task task : tasksMap.values()) {
                 writer.write(task.toString() + "\n");
             }
@@ -43,19 +43,18 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             for (String line : lines.subList(1, lines.size())) {
                 String[] fields = line.split(",");
                 TaskType taskType = TaskType.valueOf(fields[1]);
-
                 switch (taskType) {
                     case TASK:
                         Task task = Task.fromString(line);
                         manager.addTask(task);
                         break;
-                    case SUBTASK:
-                        Subtask subtask = Subtask.fromString(line);
-                        manager.addSubtask(subtask);
-                        break;
                     case EPIC:
                         Epic epic = Epic.fromString(line);
                         manager.addEpic(epic);
+                        break;
+                    case SUBTASK:
+                        Subtask subtask = Subtask.fromString(line);
+                        manager.addSubtask(subtask);
                         break;
                     default:
                         throw new IllegalArgumentException(String.format("Неизвестный тип задачи: %s", taskType));

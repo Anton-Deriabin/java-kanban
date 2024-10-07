@@ -3,20 +3,23 @@ package model;
 import manager.TaskType;
 import status.Status;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Subtask extends Task {
     private final int subtasksEpicId;
 
-
-    public Subtask(String name, String description, int subtasksEpicId) {
-        super(name, description);
+    public Subtask(String name, String description, int subtasksEpicId, Duration duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
         this.subtasksEpicId = subtasksEpicId;
     }
 
-    public Subtask(String name, String description, Status status, int id, int subtasksEpicId) {
-        super(name, description, status, id);
+    public Subtask(int id, String name, String description, Status status, int subtasksEpicId, Duration duration,
+                   LocalDateTime startTime) {
+        super(id, name, description, status, duration, startTime);
         this.subtasksEpicId = subtasksEpicId;
     }
-
 
     public int getSubtasksEpicId() {
         return subtasksEpicId;
@@ -24,7 +27,9 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return String.format("%d,%s,%s,%s,%s,%d", getId(), TaskType.SUBTASK, getName(), getStatus(), getDescription(), subtasksEpicId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return String.format("%d,%s,%s,%s,%s,%d,%d,%s", getId(), TaskType.SUBTASK, getName(), getStatus(),
+                getDescription(), subtasksEpicId, getDuration().toMinutes(), getStartTime().format(formatter));
     }
 
     public static Subtask fromString(String value) {
@@ -35,9 +40,13 @@ public class Subtask extends Task {
         Status status = Status.valueOf(fields[3]);
         String description = fields[4];
         int epicId = Integer.parseInt(fields[5]);
+        long durationMinutes = Long.parseLong(fields[6]);
+        Duration duration = Duration.ofMinutes(durationMinutes);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        LocalDateTime startTime = LocalDateTime.parse(fields[7], formatter);
 
         if (taskType == TaskType.SUBTASK) {
-            return new Subtask(name, description, status, id, epicId);
+            return new Subtask(id, name, description, status, epicId, duration, startTime);
         }
         throw new IllegalArgumentException(String.format("Неподдерживаемый тип задачи: %s", taskType));
     }

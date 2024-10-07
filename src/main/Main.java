@@ -7,6 +7,8 @@ import model.Subtask;
 import model.Task;
 import status.Status;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -14,15 +16,31 @@ public class Main {
 
     public static void main(String[] args) {
         TaskManager inMemoryTaskManager = Managers.getDefault();
-        Task task1 = new Task("Переезд", "Собрать вещи");
-        Task task2 = new Task("Стрижка", "Сходить в барбершоп");
+        Task task1 = new Task("Переезд",
+                "Собрать вещи",
+                Duration.ofMinutes(60),
+                LocalDateTime.of(2024, 9, 23, 10, 20));
+        Task task2 = new Task("Стрижка",
+                "Сходить в барбершоп",
+                Duration.ofHours(3),
+                LocalDateTime.of(2024, 9, 24, 17, 0));
         Epic epic1 = new Epic("Чертежи моста", "Сделать проект моста через реку Волга");
         Epic epic2 = new Epic("Командировка", "Подготовиться к командировке");
-        Subtask subtask11 = new Subtask("Пролетное строение", "Начертить пролетное строение",
-                3);
-        Subtask subtask12 = new Subtask("Опоры", "Начертить опоры", 3);
-        Subtask subtask21 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
-                4);
+        Subtask subtask11 = new Subtask("Пролетное строение",
+                "Начертить пролетное строение",
+                3,
+                Duration.ofDays(14),
+                LocalDateTime.of(2024, 10, 13, 8, 0));
+        Subtask subtask12 = new Subtask("Опоры",
+                "Начертить опоры",
+                3,
+                Duration.ofDays(8),
+                LocalDateTime.of(2024, 10, 28, 8, 0));
+        Subtask subtask21 = new Subtask("Билеты на самолет",
+                "Купить билеты на самолет",
+                4,
+                Duration.ofMinutes(10),
+                LocalDateTime.of(2024, 11, 25, 14, 5));
         scanner = new Scanner(System.in);
         while (true) {
             printMenu();
@@ -42,8 +60,12 @@ public class Main {
                     System.out.println(inMemoryTaskManager.getTask(1));
                     break;
                 case "5":
-                    Task task3 = new Task("Переезд. продолжение", "Собрать оставшиеся вещи",
-                            Status.INPROGRESS, task1.getId());
+                    Task task3 = new Task("Переезд продолжение",
+                            "Собрать оставшиеся вещи",
+                            task1.getId(),
+                            Status.DONE,
+                            Duration.ofMinutes(60),
+                            LocalDateTime.of(2024, 9, 23, 10, 20));
                     System.out.println(inMemoryTaskManager.updateTask(task3));
                     break;
                 case "6":
@@ -63,8 +85,9 @@ public class Main {
                     System.out.println(inMemoryTaskManager.getEpic(3));
                     break;
                 case "11":
-                    Epic epic3 = new Epic("Чертежи арочного моста", "Сделать проект моста через реку " +
-                            "Волга", epic1.getId());
+                    Epic epic3 = new Epic("Чертежи нового арочного моста",
+                            "Сделать часть  нового проекта Волга",
+                            epic1.getId());
                     System.out.println(inMemoryTaskManager.updateEpic(epic3));
                     break;
                 case "12":
@@ -85,9 +108,14 @@ public class Main {
                     System.out.println(inMemoryTaskManager.getSubtask(5));
                     break;
                 case "17":
-                    Subtask subtask22 = new Subtask("Билеты на самолет", "Купить билеты на самолет",
-                            Status.DONE, subtask21.getId(), epic2.getId());
-                    System.out.println(inMemoryTaskManager.updateSubtask(subtask22));
+                    Subtask subtask13 = new Subtask(subtask11.getId(),
+                            "Пролетное строение",
+                            "Начертить пролетное строение",
+                            Status.INPROGRESS,
+                            subtask11.getSubtasksEpicId(),
+                            subtask11.getDuration(),
+                            subtask11.getStartTime());
+                    System.out.println(inMemoryTaskManager.updateSubtask(subtask13));
                     break;
                 case "18":
                     System.out.println(inMemoryTaskManager.deleteSubtask(5));
@@ -118,7 +146,7 @@ public class Main {
         System.out.println("8 - Посмотреть список эпиков");
         System.out.println("9 - Очистить список эпиков");
         System.out.println("10 - Получить эпик по id");
-        System.out.println("11 - Обновить статус эпика");
+        System.out.println("11 - Обновить эпик");
         System.out.println("12 - Удалить эпик");
         System.out.println("13 - Добавить подзадачу в эпик");
         System.out.println("14 - Посмотреть список всех подзадач всех эпиков");
