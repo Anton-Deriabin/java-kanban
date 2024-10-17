@@ -51,7 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
                 .filter(task -> id == task.getId())
                 .findFirst();
         if (findTask.isEmpty()) {
-            throw new NotFoundException("Задача с ID " + id + " не найдена.");
+            throw new NotFoundException(String.format("Задача с ID %d не найдена.", id));
         }
         findTask.ifPresent(task -> inMemoryHistoryManager.add(task));
         return findTask;
@@ -62,8 +62,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (tasksMap.containsKey(taskToReplace.getId())) {
             tasksMap.replace(taskToReplace.getId(), taskToReplace);
         } else {
-            throw new NotFoundException("Задача с ID " + taskToReplace.getId() +
-                    " не найдена, поэтому не может быть обновлена.");
+            throw new NotFoundException(String.format("Задача с ID %d не найдена.", taskToReplace.getId()));
         }
         return taskToReplace;
     }
@@ -71,7 +70,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public HashMap<Integer, Task> deleteTask(int id) {
         if (!tasksMap.containsKey(id)) {
-            throw new NotFoundException("Задача с ID " + id + " не найдена, поэтому не может быть удалена.");
+            throw new NotFoundException(String.format("Задача с ID %d не найдена.", id));
         }
         inMemoryHistoryManager.remove(id);
         tasksMap.remove(id);
@@ -116,7 +115,7 @@ public class InMemoryTaskManager implements TaskManager {
                 .filter(epic -> id == epic.getId())
                 .findFirst();
         if (findEpic.isEmpty()) {
-            throw new NotFoundException("Эпик с ID " + id + " не найден.");
+            throw new NotFoundException(String.format("Эпик с ID %d не найден.", id));
         }
         findEpic.ifPresent(epic -> inMemoryHistoryManager.add(epic));
         return findEpic;
@@ -131,8 +130,7 @@ public class InMemoryTaskManager implements TaskManager {
             epicsMap.get(epicToReplace.getId()).setStatus(statusEpicToReplace);
             epicsMap.get(epicToReplace.getId()).updateEpicTime();
         } else {
-            throw new NotFoundException("Эпик с ID " + epicToReplace.getId() +
-                    " не найден, поэтому не может быть обновлен.");
+            throw new NotFoundException(String.format("Эпик с ID %d не найден.", epicToReplace.getId()));
         }
         return epicToReplace;
     }
@@ -140,7 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public HashMap<Integer, Epic> deleteEpic(int id) {
         if (!epicsMap.containsKey(id)) {
-            throw new NotFoundException("Эпик с ID " + id + " не найден, поэтому не может быть удален.");
+            throw new NotFoundException(String.format("Эпик с ID %d не найден.", id));
         }
         inMemoryHistoryManager.remove(id);
         epicsMap.get(id)
@@ -162,7 +160,7 @@ public class InMemoryTaskManager implements TaskManager {
         nextId++;
         subtasksMap.put(subtask.getId(), subtask);
         if (epicsMap.get(subtask.getSubtasksEpicId()) == null) {
-            throw new IllegalArgumentException("Эпик с ID " + subtask.getSubtasksEpicId() + " не найден.");
+            throw new IllegalArgumentException(String.format("Эпик с ID %d не найден.", subtask.getSubtasksEpicId()));
         }
         epicsMap.get(subtask.getSubtasksEpicId()).put(subtask);
         prioritizedTasks.add(subtask);
@@ -195,7 +193,7 @@ public class InMemoryTaskManager implements TaskManager {
                 .filter(subtask -> id == subtask.getId())
                 .findFirst();
         if (findSubtask.isEmpty()) {
-            throw new NotFoundException("Подзадача с ID " + id + " не найдена.");
+            throw new NotFoundException(String.format("Подзадача с ID %d не найдена.", id));
         }
         findSubtask.ifPresent(subtask -> inMemoryHistoryManager.add(subtask));
         inMemoryHistoryManager.add(subtasksMap.get(id));
@@ -207,16 +205,14 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtasksMap.containsKey(subtaskToReplace.getId())) {
             subtasksMap.replace(subtaskToReplace.getId(), subtaskToReplace);
         } else {
-            throw new NotFoundException("Подзадача с ID " + subtaskToReplace.getId() +
-                    " не найдена, поэтому не может быть обновлена.");
+            throw new NotFoundException(String.format("Подзадача с ID %d не найдена.", subtaskToReplace.getId()));
         }
         if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
                 .containsKey(subtaskToReplace.getId())) {
             epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
                     .replace(subtaskToReplace.getId(), subtaskToReplace);
         } else {
-            throw new NotFoundException("Подзадача с ID " + subtaskToReplace.getId() +
-                    " не найдена, поэтому не может быть обновлена.");
+            throw new NotFoundException(String.format("Подзадача с ID %d не найдена.", subtaskToReplace.getId()));
         }
         epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId())
                 .isSubtasksDone());
@@ -226,7 +222,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public HashMap<Integer, Subtask> deleteSubtask(int id) {
         if (!subtasksMap.containsKey(id)) {
-            throw new NotFoundException("Задача с ID " + id + " не найдена, поэтому не может быть удалена.");
+            throw new NotFoundException(String.format("Подзадача с ID %d не найдена.", id));
         }
         inMemoryHistoryManager.remove(id);
         subtasksMap.remove(id);
