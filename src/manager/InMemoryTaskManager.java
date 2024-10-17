@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
@@ -30,6 +31,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Task> printTasks() {
+        if (tasksMap.isEmpty()) {
+            throw new NotFoundException("Список задач пуст.");
+        }
         return tasksMap;
     }
 
@@ -47,6 +51,9 @@ public class InMemoryTaskManager implements TaskManager {
         Optional<Task> findTask = tasksMap.values().stream()
                 .filter(task -> id == task.getId())
                 .findFirst();
+        if (findTask.isEmpty()) {
+            throw new NotFoundException("Задача с ID " + id + " не найдена.");
+        }
         findTask.ifPresent(task -> inMemoryHistoryManager.add(task));
         return findTask;
     }
@@ -55,12 +62,18 @@ public class InMemoryTaskManager implements TaskManager {
     public Task updateTask(Task taskToReplace) {
         if (tasksMap.containsKey(taskToReplace.getId())) {
             tasksMap.replace(taskToReplace.getId(), taskToReplace);
+        } else {
+            throw new NotFoundException("Задача с ID " + taskToReplace.getId() +
+                    " не найдена, поэтому не может быть обновлена.");
         }
         return taskToReplace;
     }
 
     @Override
     public HashMap<Integer, Task> deleteTask(int id) {
+        if (!tasksMap.containsKey(id)) {
+            throw new NotFoundException("Задача с ID " + id + " не найдена, поэтому не может быть удалена.");
+        }
         inMemoryHistoryManager.remove(id);
         tasksMap.remove(id);
         return tasksMap;
@@ -76,6 +89,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Epic> printEpics() {
+        if (epicsMap.isEmpty()) {
+            throw new NotFoundException("Список эпиков пуст.");
+        }
         return epicsMap;
     }
 
@@ -100,9 +116,11 @@ public class InMemoryTaskManager implements TaskManager {
         Optional<Epic> findEpic = epicsMap.values().stream()
                 .filter(epic -> id == epic.getId())
                 .findFirst();
+        if (findEpic.isEmpty()) {
+            throw new NotFoundException("Эпик с ID " + id + " не найден.");
+        }
         findEpic.ifPresent(epic -> inMemoryHistoryManager.add(epic));
         return findEpic;
-
     }
 
     @Override
@@ -113,12 +131,18 @@ public class InMemoryTaskManager implements TaskManager {
             epicsMap.replace(epicToReplace.getId(), epicToReplace);
             epicsMap.get(epicToReplace.getId()).setStatus(statusEpicToReplace);
             epicsMap.get(epicToReplace.getId()).updateEpicTime();
+        } else {
+            throw new NotFoundException("Эпик с ID " + epicToReplace.getId() +
+                    " не найден, поэтому не может быть обновлен.");
         }
         return epicToReplace;
     }
 
     @Override
     public HashMap<Integer, Epic> deleteEpic(int id) {
+        if (!epicsMap.containsKey(id)) {
+            throw new NotFoundException("Эпик с ID " + id + " не найден, поэтому не может быть удален.");
+        }
         inMemoryHistoryManager.remove(id);
         epicsMap.get(id)
                 .getEpicSubtusks()
@@ -148,6 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Subtask> printSubtasks() {
+        if (subtasksMap.isEmpty()) {
+            throw new NotFoundException("Список подзадач пуст.");
+        }
         return subtasksMap;
     }
 
@@ -168,6 +195,9 @@ public class InMemoryTaskManager implements TaskManager {
         Optional<Subtask> findSubtask = subtasksMap.values().stream()
                 .filter(subtask -> id == subtask.getId())
                 .findFirst();
+        if (findSubtask.isEmpty()) {
+            throw new NotFoundException("Подзадача с ID " + id + " не найдена.");
+        }
         findSubtask.ifPresent(subtask -> inMemoryHistoryManager.add(subtask));
         inMemoryHistoryManager.add(subtasksMap.get(id));
         return findSubtask;
@@ -177,11 +207,17 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask updateSubtask(Subtask subtaskToReplace) {
         if (subtasksMap.containsKey(subtaskToReplace.getId())) {
             subtasksMap.replace(subtaskToReplace.getId(), subtaskToReplace);
+        } else {
+            throw new NotFoundException("Подзадача с ID " + subtaskToReplace.getId() +
+                    " не найдена, поэтому не может быть обновлена.");
         }
         if (epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
                 .containsKey(subtaskToReplace.getId())) {
             epicsMap.get(subtaskToReplace.getSubtasksEpicId()).getEpicSubtusks()
                     .replace(subtaskToReplace.getId(), subtaskToReplace);
+        } else {
+            throw new NotFoundException("Подзадача с ID " + subtaskToReplace.getId() +
+                    " не найдена, поэтому не может быть обновлена.");
         }
         epicsMap.get(subtaskToReplace.getSubtasksEpicId()).setStatus(epicsMap.get(subtaskToReplace.getSubtasksEpicId())
                 .isSubtasksDone());
@@ -190,6 +226,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Subtask> deleteSubtask(int id) {
+        if (!subtasksMap.containsKey(id)) {
+            throw new NotFoundException("Задача с ID " + id + " не найдена, поэтому не может быть удалена.");
+        }
         inMemoryHistoryManager.remove(id);
         subtasksMap.remove(id);
         epicsMap.values().forEach(epic ->
@@ -201,11 +240,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Subtask> printSubtusksOfEpic(Epic epic) {
+        if (epic.getEpicSubtusks().isEmpty()) {
+            throw new NotFoundException("Список подзадач эпика пуст.");
+        }
         return epic.getEpicSubtusks();
     }
 
     @Override
     public List<Task> getHistory() {
+        if (inMemoryHistoryManager.getHistory().isEmpty()) {
+            throw new NotFoundException("История пуста");
+        }
         return inMemoryHistoryManager.getHistory();
     }
 
@@ -226,5 +271,9 @@ public class InMemoryTaskManager implements TaskManager {
                                         newTask.getEndTime().isBefore(existingTask.getEndTime()) ||
                                 newTask.getStartTime().isBefore(existingTask.getStartTime()) &&
                                         newTask.getEndTime().isAfter(existingTask.getEndTime()));
+    }
+
+    public TreeSet<Task> getPrioritizedTasks() {
+        return prioritizedTasks;
     }
 }

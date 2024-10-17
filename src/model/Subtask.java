@@ -50,4 +50,5 @@ public class Subtask extends Task {
         }
         throw new IllegalArgumentException(String.format("Неподдерживаемый тип задачи: %s", taskType));
     }
+
 }
