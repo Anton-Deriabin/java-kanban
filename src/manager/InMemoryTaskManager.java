@@ -1,6 +1,5 @@
 package manager;
 
-import exceptions.NotFoundException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
