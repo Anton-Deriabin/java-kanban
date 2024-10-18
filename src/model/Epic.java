@@ -28,10 +28,20 @@ public class Epic extends Task {
         this.epicSubtusks = new HashMap<>();
     }
 
+    public Epic(String name, String description, Duration duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
+    }
+
     public Epic(String name, String description, int id, Status status, Duration duration, LocalDateTime startTime) {
         super(name, description, id, status, duration, startTime);
 
         this.epicSubtusks = new HashMap<>();
+    }
+
+    public Epic(String name, String description, Duration duration, LocalDateTime startTime,
+                HashMap<Integer, Subtask> epicSubtusks) {
+        super(name, description, duration, startTime);
+        this.epicSubtusks = epicSubtusks;
     }
 
     public HashMap<Integer, Subtask> getEpicSubtusks() {
@@ -125,4 +135,5 @@ public class Epic extends Task {
             }
         }
     }
+
 }

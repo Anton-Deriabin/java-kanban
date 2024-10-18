@@ -7,6 +7,7 @@ import model.Task;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
 
 public interface TaskManager {
     Task addTask(Task task);
@@ -49,5 +50,7 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-     void setNextId(int id);
+    void setNextId(int id);
+
+    TreeSet<Task> getPrioritizedTasks();
 }

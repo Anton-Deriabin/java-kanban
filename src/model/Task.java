@@ -25,11 +25,9 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public Task(String name, String description, Status status, int id) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = status;
-        this.id = id;
     }
 
     public Task(String name, String description, int id) {
@@ -39,18 +37,11 @@ public class Task {
         this.status = Status.NEW;
     }
 
-    public Task(String name, String description, int id, Status status, Duration duration, LocalDateTime startTime) {
+    public Task(String name, String description, Status status, int id) {
         this.name = name;
         this.description = description;
-        this.id = id;
         this.status = status;
-        this.duration = duration;
-        this.startTime = startTime;
-    }
-
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
+        this.id = id;
     }
 
     public Task(String name, String description, int id, Status status) {
@@ -58,6 +49,15 @@ public class Task {
         this.description = description;
         this.id = id;
         this.status = status;
+    }
+
+    public Task(String name, String description, int id, Status status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public Task(int id, String name, String description, Status status, Duration duration, LocalDateTime startTime) {
@@ -109,10 +109,6 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public static String getFormat() {
-        return format;
-    }
-
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -146,14 +142,24 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name)
-                && Objects.equals(description, task.description)
-                && status == task.status && Objects.equals(duration, task.duration)
-                && Objects.equals(startTime, task.startTime);
+        return id == task.id &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(description, task.description) &&
+                status == task.status &&
+                Objects.equals(duration, task.duration) &&
+                Objects.equals(startTime, task.startTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status, duration, startTime);
+        int hash = 17;
+        if (name != null) {
+            hash += name.hashCode();
+        }
+        hash *= 31;
+        if (description != null) {
+            hash += description.hashCode();
+        }
+        return hash;
     }
 }
